@@ -14,7 +14,8 @@
 #ifndef __EES_CONST_H__
 #define __EES_CONST_H__		 "@(#)eesConst.h $Revision$"
 
-/* TODO */
+#define IDIOMS_QUANTITY		2
+#define ERROR_CODE_QUANTITY	2
 
 #endif
 

@@ -12,7 +12,7 @@
  */
 
 
-static const char eesCliErrosMessages[][]=
+char *eesCliErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
   /* English Error Messages */
   {
@@ -27,7 +27,7 @@ static const char eesCliErrosMessages[][]=
   }
 };
 
-static const char eesNcursesErrosMessages[][]=
+char *eesNcursesErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
   /* English Error Messages */
   {
@@ -42,7 +42,7 @@ static const char eesNcursesErrosMessages[][]=
   }
 };
 
-static const char eesWebErrosMessages[][]=
+char *eesWebErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
   /* English Error Messages */
   {
@@ -77,6 +77,7 @@ static const char eesWebErrosMessages[][]=
 char *
 EesGetCliErrorMessage (eesErrorType, eesLanguageType)
 {
+  
 }
 
 /******************************************************************************************************************/
@@ -106,7 +107,7 @@ EesGetNcursesErrorMessage (eesErrorType, eesLanguageType)
 /* TODO */
 /*
 * char *
-* EesGetCliErrorMessage (eesErrorType, eesLanguageType)
+* EesGetWebErrorMessage (eesErrorType, eesLanguageType)
 *
 * Arguments:
 * eesErrorType - number of the error type (I)

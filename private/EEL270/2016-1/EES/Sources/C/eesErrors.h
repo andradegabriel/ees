@@ -14,6 +14,7 @@
 #ifndef __EES_ERRORS_H__
 #define __EES_ERRORS_H__	"@(#)eesErrors.h $Revision$"
 
+/* More codes will be added here, as we go with this project */
 typedef enum _eesErrorType 
 {
   ok,
