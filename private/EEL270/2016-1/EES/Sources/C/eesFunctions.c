@@ -27,7 +27,7 @@
 * char * - string related to the language desired (I)
 *
 * Returned code:
-* eesLanguageNotSupported - The language chosen is not supported on the system.
+* eesEnglish - If the language chosen is not supported on the system, english will be the default language.
 * eesEnglish - The language chosen is english.
 * eesPortuguese - The language chosen is portuguese.
 *
@@ -37,8 +37,12 @@
 eesLanguageType
 EesGetLanguageIndex (char *chosenLanguage)
 {
+  if(chosenLanguage == NULL)
+    return eesEnglish;
+
+  /* If a language is not define, the default language will be English */
   if((strcmp(chosenLanguage, "eesEnglish") != 0) && (strcmp(chosenLanguage, "eesPortuguese") != 0))
-    return eesLanguageNotSupported;
+    return eesEnglish;
 
   /* Case in which the chosenLanguage is EQUAL to eesEnglish */
   if(strcmp(chosenLanguage, "eesEnglish") == 0)

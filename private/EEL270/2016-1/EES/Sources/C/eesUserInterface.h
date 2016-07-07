@@ -11,12 +11,15 @@
  *
  */
 
-#ifndef 
-#define  "@(#)eesUserInterface.h $Revision$"
+#ifndef __EES_USER_INTERFACE_H__
+#define __EES_USER_INTERFACE_H__ 	"@(#)eesUserInterface.h $Revision$"
 
 typedef enum _eesUserInterfaceMessageNumberType
 {
-  /* TODO */
+  createAccount,
+  deleteUser,
+  login,
+  eesUserInterfaceMessageAmount
 } eesUserInterfaceMessageNumberType;
 
 
@@ -32,8 +35,7 @@ typedef enum _eesUserInterfaceMessageNumberType
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains an user interface message.
 *
 * Description:
 * This function gets the user interface message that will be shown in CLI interface. */ 
@@ -51,8 +53,7 @@ EesGetCliUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageTyp
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains an user interface message.
 *
 * Description:
 * This function gets the user interface message that will be shown in Ncurses interface. */  
@@ -70,8 +71,7 @@ EesGetNcursesUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguag
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains an user interface message.
 *
 * Description:
 * This function gets the user interface message that will be shown in web interface. */ 

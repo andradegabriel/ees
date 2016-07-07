@@ -17,38 +17,38 @@ LFLAGS = -Wall -ansi
 
 TESTGETLANGUAGETYPE = eesFunctions.o mainTest.o
 
-LIBMATEMATICAOBJS = aula0301a.o
+TESTGETERRORMESSAGE = eesFunctions.o eesErrors.o mainTest.o
 
-LIBS = libmatematica.a
+TESTGETUSERINTERFACEMESSAGE = eesFunctions.o eesUserInterface.o mainTest.o
 
 TESTE_GETLANGUAGETYPE = getLanguageType
-
+TESTE_GETERRORMESSAGE = getErrorMessages
+TESTE_GETUSERINTERFACEMESSAGE = getUserInterfaceMessage
 
 ALL = $(LIBS)\
       $(EXECS)
 
 
-EXECS = $(TESTE_GETLANGUAGETYPE)
+EXECS = $(TESTE_GETLANGUAGETYPE)\
+	$(TESTE_GETERRORMESSAGE)\
+	$(TESTE_GETUSERINTERFACEMESSAGE)
+	
 
-#Implicit Rulei
+#Implicit Rule
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
 all: $(ALL)
 
-aula03: $(AULA03)
 
 getLanguageType: $(TESTGETLANGUAGETYPE)
 	$(LD) $(LFLAGS) -o $@ $?
 
-aula0304d: $(AULA0304DOBJS)
-	$(LD) $(LFLAGS) -o $@ $? -L. -lmatematica
+getErrorMessages: $(TESTGETERRORMESSAGE)
+	$(LD) $(LFLAGS) -o $@ $?
 
-aula0304e: $(AULA0304EOBJS)
-	$(LD) $(LFLAGS) -o $@ $? -lm
-
-libmatematica.a: $(LIBMATEMATICAOBJS)
-	ar -r $(LIBS) $(LIBMATEMATICAOBJS)
+getUserInterfaceMessage:  $(TESTGETUSERINTERFACEMESSAGE)
+	$(LD) $(LFLAGS) -o $@ $?
 
 #iinstall:
 

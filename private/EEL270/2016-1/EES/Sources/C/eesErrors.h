@@ -11,6 +11,8 @@
  *
  */
 
+#include "eesTypes.h"
+
 #ifndef __EES_ERRORS_H__
 #define __EES_ERRORS_H__	"@(#)eesErrors.h $Revision$"
 
@@ -18,7 +20,9 @@
 typedef enum _eesErrorType 
 {
   ok,
-  invalidArgument
+  invalidArgument,
+  invalidChosenLanguage,
+  eesErrorsAmount			/* ATENTION! eesErrorsAmount must always be last element in this enum */
 } eesErrorType;
 
 
@@ -34,8 +38,7 @@ typedef enum _eesErrorType
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains the error message.
 *
 * Description:
 * This function gets the error message that will be shown in CLI interface. */ 
@@ -54,8 +57,7 @@ EesGetCliErrorMessage (eesErrorType, eesLanguageType);
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains the error message.
 *
 * Description:
 * This function gets the error message that will be shown in Ncurses interface. */  
@@ -74,8 +76,7 @@ EesGetNcursesErrorMessage (eesErrorType, eesLanguageType);
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains the error message.
 *
 * Description:
 * This function gets the error message that will be shown in web interface. */ 

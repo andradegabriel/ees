@@ -16,14 +16,11 @@
 
 typedef enum _eesLanguageType
 {
-  eesLanguageNotSupported	= 0,
-  eesEnglish			= 1,
-  eesPortuguese			= 2,
-  eesLanguagesAmount 		= 2
+  eesEnglish			= 0,
+  eesPortuguese			= 1,
+  eesLanguagesAmount 		= 2	/* ATENTION! eesLanguagesAmount must always be last element in this enum */
 } eesLanguageType;
 
-
-/* TODO */
 
 #endif
 

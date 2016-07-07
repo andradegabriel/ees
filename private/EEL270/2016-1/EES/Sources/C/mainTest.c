@@ -19,24 +19,85 @@
 #include "eesTypes.h"
 #include "eesFunctions.h"
 #include "eesErrors.h"
-
+#include "eesUserInterface.h"
 
 int main (int argc, char **argv)
 {
-  int languageReturn;  
+
+/**********************************************************************************************************/
+/* EesGetCliUserInterfaceMessage, EesGetNcursesUserInterfaceMessage, EesGetWebUserInterfaceMessage Test   */	
+/**********************************************************************************************************/
+
+/*
+
+  int userInterfaceMessageNumber;
+  eesLanguageType languageReturn;
+
+  languageReturn = EesGetLanguageIndex (argv[2]);
+
+  userInterfaceMessageNumber = atoi(argv[1]);
+
+  printf("error number: %s\n", argv[1]);
+  printf("languageReturn: %u\n", languageReturn);
+
+  printf("%s\n", EesGetCliUserInterfaceMessage(userInterfaceMessageNumber, languageReturn));
+  printf("%s\n", EesGetNcursesUserInterfaceMessage(userInterfaceMessageNumber, languageReturn));
+  printf("%s\n", EesGetWebUserInterfaceMessage(userInterfaceMessageNumber, languageReturn));
+*/
+
+/****************************************************************************************************/
+
+
+
+
+/****************************************************************************************************/
+/* EesGetCliErrorMessage, EesGetNcursesErrorMessage, EesGetWebErrorMessage Test			    */	
+/****************************************************************************************************/
+
+/*
+
+  int errorNumber;
+  eesLanguageType languageReturn;
+
+  languageReturn = EesGetLanguageIndex (argv[2]);
+
+  errorNumber = atoi(argv[1]);
+
+  printf("error number: %s\n", argv[1]);
+  printf("languageReturn: %u\n", languageReturn);
+
+  printf("%s\n", EesGetCliErrorMessage(errorNumber, languageReturn));
+  printf("%s\n", EesGetNcursesErrorMessage(errorNumber, languageReturn));
+  printf("%s\n", EesGetWebErrorMessage(errorNumber, languageReturn));
+*/
+
+/****************************************************************************************************/
+
+
+/****************************************************************************************************/
+/* EesGetLanguageIndex Test									    */	
+/****************************************************************************************************/
+
+/*
+  eesLanguageType languageReturn;
 
   languageReturn = EesGetLanguageIndex (argv[1]);
 
-  if(languageReturn == 0)
-    printf("Language not supported.\n");
+  printf("argv: %s\n", argv[1]);
+  printf("languageReturn: %u\n", languageReturn);
 
-  if(languageReturn == 1)
+  if(languageReturn == 0)
     printf("Language = English.\n");
 
-  if(languageReturn == 2)
+  if(languageReturn == 1)
     printf("Language = Portuguese.\n");
+*/
+
+/****************************************************************************************************/
 
   return 0;
 }
 
 /* $RCSfile$ */
+
+

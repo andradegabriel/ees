@@ -11,49 +11,73 @@
  *
  */
 
+#include "eesConst.h"
+#include "eesTypes.h"
+#include "eesErrors.h"
+#include "eesUserInterface.h"
+#include "eesFunctions.h"
 
-static const char eesCliUserInterfaceMessages[][]=
+/* TODO - Make sure that is it */
+char *eesCliUserInterfaceMessages[IDIOMS_QUANTITY][USER_INTERFACE_MESSAGE_NUMBER]=
 {
   /* English user interface messages */
   {
-    /* TODO */
+    "Create account.",
+    "Delete user.",
+    "Login account.",
+    "No user interface info."
   },
 
   /* Portuguese user interface messages */
   {
-    /* TODO */
+    "Criar conta.",
+    "Deletar usuario.",
+    "Realizar o login.",
+    "Nenhuma mensagem para o usuario."
   }
 };
 
-static const char eesNcursesUserInterfaceMessages[][]=
+char *eesNcursesUserInterfaceMessages[IDIOMS_QUANTITY][USER_INTERFACE_MESSAGE_NUMBER]=
 {
   /* English user interface messages */
   {
-    /* TODO */
+    "Create account.",
+    "Delete user.",
+    "Login account.",
+    "No user interface info."
   },
 
   /* Portuguese user interface messages */
   {
-    /* TODO */
+    "Criar conta.",
+    "Deletar usuario.",
+    "Realizar o login.",
+    "Nenhuma mensagem para o usuario."
   }
 };
 
-static const char eesWebUserInterfaceMessages[][]=
+char *eesWebUserInterfaceMessages[IDIOMS_QUANTITY][USER_INTERFACE_MESSAGE_NUMBER]=
 {
   /* English user interface messages */
   {
-    /* TODO */
+    "Create account.",
+    "Delete user.",
+    "Login account.",
+    "No user interface info."
   },
 
   /* Portuguese user interface messages */
   {
-    /* TODO */
+    "Criar conta.",
+    "Deletar usuario.",
+    "Realizar o login.",
+    "Nenhuma mensagem para o usuario."
   }
 };
 
 /******************************************************************************************************************/
 
-/* TODO */
+
 /*
 * char *
 * EesGetCliUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageType)
@@ -63,19 +87,28 @@ static const char eesWebUserInterfaceMessages[][]=
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains an user interface message.
 *
 * Description:
 * This function gets the user interface message that will be shown in CLI interface. */ 
 char *
-EesGetCliUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageType)
+EesGetCliUserInterfaceMessage (eesUserInterfaceMessageNumberType messageNumber, eesLanguageType chosenLanguage)
 {
+
+   /* If the error number is greater than the total number of errors or smaller than the first error number */
+  if(messageNumber > eesUserInterfaceMessageAmount || messageNumber < 0)
+    return eesCliUserInterfaceMessages[chosenLanguage][eesUserInterfaceMessageAmount];
+
+  if(chosenLanguage == eesEnglish)
+    return eesCliUserInterfaceMessages[eesEnglish][messageNumber];
+
+  return eesCliUserInterfaceMessages[eesPortuguese][messageNumber];
+
 }
 
 /******************************************************************************************************************/
 
-/* TODO */
+
 /*
 * char *
 * EesGetNcursesUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageType)
@@ -85,19 +118,27 @@ EesGetCliUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageTyp
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains an user interface message.
 *
 * Description:
 * This function gets the user interface message that will be shown in Ncurses interface. */  
 char *
-EesGetNcursesUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageType)
+EesGetNcursesUserInterfaceMessage (eesUserInterfaceMessageNumberType messageNumber, eesLanguageType chosenLanguage)
 {
+
+  /* If the error number is greater than the total number of errors or smaller than the first error number */
+  if(messageNumber > eesUserInterfaceMessageAmount || messageNumber < 0)
+    return eesNcursesUserInterfaceMessages[chosenLanguage][eesUserInterfaceMessageAmount];
+
+  if(chosenLanguage == eesEnglish)
+    return eesNcursesUserInterfaceMessages[eesEnglish][messageNumber];
+
+  return eesNcursesUserInterfaceMessages[eesPortuguese][messageNumber];
 }
 
 /******************************************************************************************************************/
 
-/* TODO */
+
 /*
 * char *
 * EesGetWebUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageType)
@@ -107,14 +148,23 @@ EesGetNcursesUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguag
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains an user interface message.
 *
 * Description:
 * This function gets the user interface message that will be shown in web interface. */ 
 char *
-EesGetWebUserInterfaceMessage (eesUserInterfaceMessageNumberType, eesLanguageType)
+EesGetWebUserInterfaceMessage (eesUserInterfaceMessageNumberType messageNumber, eesLanguageType chosenLanguage)
 {
+  
+  /* If the error number is greater than the total number of errors or smaller than the first error number */
+  if(messageNumber > eesUserInterfaceMessageAmount || messageNumber < 0)
+    return eesWebUserInterfaceMessages[chosenLanguage][eesUserInterfaceMessageAmount];
+
+  if(chosenLanguage == eesEnglish)
+    return eesWebUserInterfaceMessages[eesEnglish][messageNumber];
+
+  return eesWebUserInterfaceMessages[eesPortuguese][messageNumber];
+
 }
 
 /******************************************************************************************************************/

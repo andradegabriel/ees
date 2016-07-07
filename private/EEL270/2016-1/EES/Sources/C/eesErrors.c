@@ -11,55 +11,74 @@
  *
  */
 
+#include <stdio.h>
 
-char *eesCliErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
+#include "eesConst.h"
+#include "eesErrors.h"
+#include "eesTypes.h"
+#include "eesFunctions.h"
+
+
+char *eesCliErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
   /* English Error Messages */
   {
     "Successful operation!",
-    "Invalid argument."
+    "Invalid argument.",
+    "Invalid chosen language.",
+    "Invalid error number."
   },
 
   /* Portuguese Error Messages */
   {
     "Operacao realizada com sucesso.",
-    "Argumento invalido."
+    "Argumento invalido.",
+    "Lingua escolhida eh invalida.",
+    "Numero de erro invalido."
   }
 };
 
-char *eesNcursesErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
+char *eesNcursesErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
   /* English Error Messages */
   {
     "Successful operation!",
-    "Invalid argument."
+    "Invalid argument.",
+    "Invalid chosen language.",
+    "Invalid error number."
   },
 
   /* Portuguese Error Messages */
   {
     "Operacao realizada com sucesso.",
-    "Argumento invalido."
+    "Argumento invalido.",
+    "Lingua escolhida eh invalida.",
+    "Numero de erro invalido."
   }
 };
 
-char *eesWebErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
+char *eesWebErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
   /* English Error Messages */
   {
     "Successful operation!",
-    "Invalid argument."
+    "Invalid argument.",
+    "Invalid chosen language.",
+    "Invalid error number."
   },
 
   /* Portuguese Error Messages */
   {
     "Operacao realizada com sucesso.",
-    "Argumento invalido."
+    "Argumento invalido.",
+    "Lingua escolhida eh invalida.",
+    "Numero de erro invalido."
   }
 };
 
 /******************************************************************************************************************/
 
-/* TODO */
+
 /*
 * char *
 * EesGetCliErrorMessage (eesErrorType, eesLanguageType)
@@ -69,20 +88,28 @@ char *eesWebErrosMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains the error message.
 *
 * Description:
 * This function gets the error message that will be shown in CLI interface. */ 
 char *
-EesGetCliErrorMessage (eesErrorType, eesLanguageType)
+EesGetCliErrorMessage (eesErrorType errorNumber, eesLanguageType chosenLanguage)
 {
-  
+
+  /* If the error number is greater than the total number of errors or smaller than the first error number */
+  if(errorNumber > eesErrorsAmount || errorNumber < 0)
+    return eesCliErrorMessages[chosenLanguage][eesErrorsAmount];
+
+  if(chosenLanguage == eesEnglish)
+    return eesCliErrorMessages[eesEnglish][errorNumber];
+
+  return eesCliErrorMessages[eesPortuguese][errorNumber];
+
 }
 
 /******************************************************************************************************************/
 
-/* TODO */
+
 /*
 * char *
 * EesGetNcursesErrorMessage (eesErrorType, eesLanguageType)
@@ -92,19 +119,26 @@ EesGetCliErrorMessage (eesErrorType, eesLanguageType)
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains the error message.
 *
 * Description:
 * This function gets the error message that will be shown in Ncurses interface. */  
 char *
-EesGetNcursesErrorMessage (eesErrorType, eesLanguageType)
+EesGetNcursesErrorMessage (eesErrorType errorNumber, eesLanguageType chosenLanguage)
 {
+  /* If the error number is greater than the total number of errors or smaller than the first error number */
+  if(errorNumber > eesErrorsAmount || errorNumber < 0)
+    return eesNcursesErrorMessages[chosenLanguage][eesErrorsAmount];
+
+  if(chosenLanguage == eesEnglish)
+    return eesNcursesErrorMessages[eesEnglish][errorNumber];
+
+  return eesNcursesErrorMessages[eesPortuguese][errorNumber];
 }
 
 /******************************************************************************************************************/
 
-/* TODO */
+
 /*
 * char *
 * EesGetWebErrorMessage (eesErrorType, eesLanguageType)
@@ -114,14 +148,21 @@ EesGetNcursesErrorMessage (eesErrorType, eesLanguageType)
 * eesLanguageType - language type of the message (I)
 *
 * Returned code:
-*  TODO
-* xyzOk - Function has been executed successfully.
+* char * - returns a string that contains the error message.
 *
 * Description:
 * This function gets the error message that will be shown in web interface. */ 
 char *
-EesGetWebErrorMessage (eesErrorType, eesLanguageType)
+EesGetWebErrorMessage (eesErrorType errorNumber, eesLanguageType chosenLanguage)
 {
+  /* If the error number is greater than the total number of errors or smaller than the first error number */
+  if(errorNumber > eesErrorsAmount || errorNumber < 0)
+    return eesWebErrorMessages[chosenLanguage][eesErrorsAmount];
+
+  if(chosenLanguage == eesEnglish)
+    return eesWebErrorMessages[eesEnglish][errorNumber];
+
+  return eesWebErrorMessages[eesPortuguese][errorNumber];
 }
 
 /******************************************************************************************************************/
