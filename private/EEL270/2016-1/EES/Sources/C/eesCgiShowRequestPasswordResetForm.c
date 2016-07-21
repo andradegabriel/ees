@@ -21,13 +21,13 @@
 
 
 /*
-* eesCgiMain.c
+* eesCgishowRequestPasswordResetForm.c
 *
 * Returned code:
 * ML_CGI_OK - Function has been executed successfully.
 *
 * Description:
-* Used to change the idiom on the web interface. */ 
+* Used to show the registration form to get a temporary password on the web interface. */ 
 
 int main (int argc, char **argv)
 {
@@ -65,9 +65,6 @@ int main (int argc, char **argv)
     printf("    </title>");
     printf("  </head>");
     printf("  <body>");
-    printf("    <div align = \"right\">");
-    printf("      <a href=\"index-br.html\"><img src=\"images/brazil_Flag.jpg\" alt=\"brazil_Flag\" width=\"45\" height=\"25\"></a>");
-    printf("    </div>");
     printf("    <div style=\"text-align: center; font-family: arial; color:#5FDF00; font-size: 30px;\">");
     printf("      Educational Evaluation System");
     printf("    </div>");
@@ -82,18 +79,18 @@ int main (int argc, char **argv)
     printf("      <form action =\"Cgis/eesLogin.cgi\" method =\"post\">");
     printf("        <tr>");
     printf("          <td align =\"right\">");
-    printf("            Username:");
+    printf("            Full Name:");
     printf("          </td>");
     printf("          <td align = \"left\">");
-    printf("            <input type =\"text\" name =\"eesNickname\" size =\"32\" maxlength =\"65\">");
+    printf("            <input type =\"text\" name =\"eesNickname\" size =\"32\" maxlength =\"127\">");
     printf("          </td>");
     printf("        </tr>");
     printf("        <tr>");
     printf("          <td align =\"right\">");
-    printf("            Password:");
+    printf("            Email:");
     printf("          </td>");
     printf("          <td align =\"left\">");
-    printf("            <input type =\"password\" name =\"eesPassword\" size =\"32\" maxlength =\"127\">");
+    printf("            <input type =\"text\" name =\"eesEmail\" size =\"32\" maxlength =\"1024\">");
     printf("          </td>");
     printf("        </tr>");
     printf("        <tr>");
@@ -110,13 +107,7 @@ int main (int argc, char **argv)
     printf("        <input type =\"hidden\" name =\"eesLanguage\" value =\"eesEnglish\">");
     printf("          <tr>");
     printf("            <td style=\"text-align: left; font-family: arial; font-size: 15px;\">");
-    printf("              <a href =\"Cgis/eesShowRegisterNewUserform.cgi?eesLanguage=eesEnglish\"> Register </a>");
-    printf("            </td>");
-    printf("            <td style=\"text-align: center; font-family: arial; font-size: 15px;\">");
-    printf("              <a href =\"Cgis/eesShowRecoveryPasswordform.cgi?eesLanguage=eesEnglish\"> Recover Password </a>");
-    printf("            </td>");
-    printf("            <td style=\"text-align: right; font-family: arial; font-size: 15px;\">");
-    printf("              <a href = \"Cgis/eesShowHelp.cgi?eesLanguage=eesEnglish\"> Help </a>");
+    printf("              <a href =\"Cgis/eesRequestPasswordReset.cgi?eesLanguage=eesEnglish\"></a>");
     printf("            </td>");
     printf("          </tr>");
     printf("      </form>");
@@ -129,9 +120,6 @@ int main (int argc, char **argv)
     printf("      <img src=\"images/GreenLine.jpg\" alt=\"Green_Line\">");
     printf("    </div>");
     printf("    <br>");
-    printf("    <div style=\"text-align: center; font-family: arial; font-size: 15px;\">");
-    printf("      Author:  <a href=\"mailto: gabrielandrade@poli.ufrj.br\"> Gabriel Andrade de Souza </a>");
-    printf("    </div>");
     printf("  </body>");
     printf("</html>");
   }
@@ -163,18 +151,18 @@ int main (int argc, char **argv)
     printf("      <form action =\"Cgis/eesLogin.cgi\" method =\"post\">");
     printf("        <tr>");
     printf("          <td align =\"right\">");
-    printf("            Nome de Usu&aacute;rio:");
+    printf("            Full Name:");
     printf("          </td>");
     printf("          <td align = \"left\">");
-    printf("            <input type =\"text\" name =\"eesNickname\" size =\"32\" maxlength =\"65\">");
+    printf("            <input type =\"text\" name =\"eesNickname\" size =\"32\" maxlength =\"127\">");
     printf("          </td>");
     printf("        </tr>");
     printf("        <tr>");
     printf("          <td align =\"right\">");
-    printf("            Senha:");
+    printf("            Email:");
     printf("          </td>");
     printf("          <td align =\"left\">");
-    printf("            <input type =\"password\" name =\"eesPassword\" size =\"32\" maxlength =\"127\">");
+    printf("            <input type =\"text\" name =\"eesEmail\" size =\"32\" maxlength =\"1024\">");
     printf("          </td>");
     printf("        </tr>");
     printf("        <tr>");
@@ -188,16 +176,10 @@ int main (int argc, char **argv)
     printf("    <!-- Definition of some links -->");
     printf("    <table border="0" align=\"center\">");
     printf("      <form action =\"Cgis/eesLogin.cgi\" method = \"post\">");
-    printf("        <input type =\"hidden\" name =\"eesLanguage\" value =\"eesPortuguese\">");
+    printf("        <input type =\"hidden\" name =\"eesLanguage\" value =\"eesEnglish\">");
     printf("          <tr>");
     printf("            <td style=\"text-align: left; font-family: arial; font-size: 15px;\">");
-    printf("              <a href =\"Cgis/eesShowRegisterNewUserform.cgi?eesLanguage=eesPortuguese\"> Registre-se </a>");
-    printf("            </td>");
-    printf("            <td style=\"text-align: center; font-family: arial; font-size: 15px;\">");
-    printf("              <a href =\"Cgis/eesShowRecoveryPasswordform.cgi?eesLanguage=eesPortuguese\"> Recuperar Senha </a>");
-    printf("            </td>");
-    printf("            <td style=\"text-align: right; font-family: arial; font-size: 15px;\">");
-    printf("              <a href = \"Cgis/eesShowHelp.cgi?eesLanguage=eesPortuguese\"> Ajuda </a>");
+    printf("              <a href =\"Cgis/eesRequestPasswordReset.cgi?eesLanguage=eesEnglish\"> Registre-se </a>");
     printf("            </td>");
     printf("          </tr>");
     printf("      </form>");
@@ -210,9 +192,6 @@ int main (int argc, char **argv)
     printf("      <img src=\"images/GreenLine.jpg\" alt=\"Green_Line\">");
     printf("    </div>");
     printf("    <br>");
-    printf("    <div style=\"text-align: center; font-family: arial; font-size: 15px;\">");
-    printf("      Autor:  <a href=\"mailto: gabrielandrade@poli.ufrj.br\"> Gabriel Andrade de Souza </a>");
-    printf("    </div>");
     printf("  </body>");
     printf("</html>");
   }
