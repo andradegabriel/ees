@@ -12,6 +12,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "eesConst.h"
 #include "eesErrors.h"
