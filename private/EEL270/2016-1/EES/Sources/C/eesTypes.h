@@ -11,17 +11,33 @@
  *
  */
 
+#include "eesConst.h"
+
 #ifndef __EES_TYPES_H__
 #define __EES_TYPES_H__		"@(#)eesTypes.h $Revision$"
 
+/*===========================================================================================================*/
+
 typedef enum _eesLanguageType
 {
-  eesEnglish			= 0,
-  eesPortuguese			= 1,
+  eesEnglish			      = 0,
+  eesPortuguese			    = 1,
   eesLanguagesAmount 		= 2	/* ATENTION! eesLanguagesAmount must always be last element in this enum */
 } eesLanguageType;
 
+/*===========================================================================================================*/
+
+typedef enum boolean
+{
+  false   = 0,
+  true    = 1
+} boolean;
+
+/*===========================================================================================================*/
+
 typedef unsigned long long eesUserIdentifierType;
+
+/*===========================================================================================================*/
 
 typedef enum _eesUserProfileType
 {
@@ -32,27 +48,33 @@ typedef enum _eesUserProfileType
   adminitratorAlumn             = 5
 } eesUserProfileType;
 
-typedef struct _eesUserDataType
+/*===========================================================================================================*/
+
+typedef struct eesUserDataType
 {
-  eesUserIdentifierType userIdentifier;
-  char eesNickname[MAXIMUM_USER_NICKNAME_LENGTH];
-  char password[MAXIMUM_PASSWORD_LENGTH];
-  char passwordConfirmation[MAXIMUM_PASSWORD_LENGTH];
-  eesUserProfileType profile;
-  char fullName[MAXIMUM_USER_FULL_NAME_LENGTH];
-  char fullNameConfirmation[MAXIMUM_USER_FULL_NAME_LENGTH];
-  char email[MAXIMUM_EMAIL_LENGTH];
-  char emailConfirmation[MAXIMUM_EMAIL_LENGTH];
-  eesUserDataType *previous, next;
+  eesUserIdentifierType   userIdentifier;
+  char                    eesNickname[MAXIMUM_USER_NICKNAME_LENGTH];
+  char                    password[MAXIMUM_PASSWORD_LENGTH];
+  char                    passwordConfirmation[MAXIMUM_PASSWORD_LENGTH];
+  eesUserProfileType      profile;
+  char                    fullName[MAXIMUM_USER_FULL_NAME_LENGTH];
+  char                    fullNameConfirmation[MAXIMUM_USER_FULL_NAME_LENGTH];
+  char                    email[MAXIMUM_EMAIL_LENGTH];
+  char                    emailConfirmation[MAXIMUM_EMAIL_LENGTH];
+  struct eesUserDataType  *previous, *next;
 } eesUserDataType;
 
-typedef struct _eesCryptAlgorithms
+/*===========================================================================================================*/
+
+typedef enum eesCryptAlgorithms
 {
-  eesDes, 
-  eesMd5, 
-  eesSha256,
-  eesSha512
+  eesDes              = 0, 
+  eesMd5              = 1, 
+  eesSha256           = 2,
+  eesSha512           = 3
 } eesCryptAlgorithms;
+
+/*===========================================================================================================*/
 
 #endif
 

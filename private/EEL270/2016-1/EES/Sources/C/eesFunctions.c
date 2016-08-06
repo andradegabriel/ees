@@ -13,12 +13,15 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
 
+#include "eesConst.h"
 #include "eesTypes.h"
 #include "eesFunctions.h"
 #include "eesErrors.h"
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 /*
 * eesLanguageType
 * EesGetLanguageIndex (char *);
@@ -51,28 +54,34 @@ eesLanguageType EesGetLanguageIndex (char *chosenLanguage)
   return eesPortuguese;
 }
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
-* eesLanguageType
-* EesGetLanguageIndex (char *);
+* char *
+* EesGetAbsolutFileName (char *, char *);
 *
 * Arguments:
-* char * - string related to the language desired (I)
+* char * - fisrt string to be concatenated (I)
+* char * - second string to be concatenated (I)
 *
 * Returned code:
-* eesLanguageNotSupported - The language chosen is not supported on the system.
-* eesEnglish - The language chosen is english.
-* eesPortuguese - The language chosen is portuguese.
+* char * - The concatenation of both strings.
 *
 * Description:
-* This function gets the desired language that will be used in the system. */ 
+* This function concatenates both string and return the result of the concatenation. */ 
 
-void eesGetAbsolutFileName (char *, char *)
+char * EesGetAbsolutFileName (char * fisrtString, char * secondString)
 {
+  char *resultString;
   
+  if((fisrtString == NULL) || (secondString == NULL))
+    return NULL;
+  
+  snprintf(resultString, (sizeof(fisrtString) + sizeof(secondString)), "%s", "%s", fisrtString, secondString);
+  
+  return resultString;
 }
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -89,19 +98,19 @@ void eesGetAbsolutFileName (char *, char *)
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
-eesErrorType eesCheckStringField (char *, char *, unsigned, unsigned)
+eesErrorType EesCheckStringField (char * field, char * validCharacters, unsigned minimumLength, unsigned maximumLength)
 {
-   unsigned indexField, indexCharacters, valueFound;
+  unsigned indexField, indexCharacters, valueFound;
 
   if (field == NULL || validCharacters == NULL)
-    return eesErrorInvalidContent;
+    return invalidContentError;
 
   if (strlen(field) < minimumLength || strlen(field) > maximumLength)
-    return eesErrorInvalidString;
+    return invalidStringError;
 
 
   for (indexField = 0; indexField < strlen(field); indexField++)
@@ -109,7 +118,7 @@ eesErrorType eesCheckStringField (char *, char *, unsigned, unsigned)
     for (indexCharacters = 0; indexCharacters < strlen(validCharacters); indexCharacters++)
     {
       if (field[indexField] != validCharacters[indexCharacters])
-	valueFound = 0;   /* if the value was NOT found */
+	       valueFound = 0;   /* if the value was NOT found */
 
       if (field[indexField] == validCharacters[indexCharacters])
       {
@@ -119,13 +128,13 @@ eesErrorType eesCheckStringField (char *, char *, unsigned, unsigned)
     }
 
     if (valueFound == 0)
-      return eesErrorInvalidString;
+      return invalidStringError;
   }
 
-  return eesErrorOk;
+  return ok;
 }
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -142,13 +151,13 @@ eesErrorType eesCheckStringField (char *, char *, unsigned, unsigned)
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesCheckNickname (char *, char *, size_t, size_t);
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -165,13 +174,13 @@ eesErrorType EesCheckNickname (char *, char *, size_t, size_t);
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesCheckEmail (char *, char *, size_t, size_t);
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Creates a random string. 
@@ -189,9 +198,48 @@ eesErrorType EesCheckEmail (char *, char *, size_t, size_t);
 *	  occurs, the following constant will be returned:
 *	  essErrorCreatingRandomString
 */
-essErrorType essCreateRandomString (char *, unsigned, char *);
+eesErrorType EesCreateRandomString (char *, unsigned, char *);
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
+
+/*
+* eesErrorType 
+* EesSearchUser (char *nickname, thcUserDataType *data);
+* 
+* Arguments: 
+* char *nickname					  - user nickname
+* thcUserDataType *data			- struct with all user data
+* 
+* Returned Code:
+* readingFileError			  - Error reading the file
+* usernameNotFoundError		- Nickname not found on the file
+* ok							        - User found without errors
+* 
+* Description:
+* This functions takes a nickname and search for it on the file EES_FILE_NAME and saves user information
+* on *data if found.
+*/
+eesErrorType EesSearchUser (char *nickname, eesUserDataType *data)
+{
+	FILE *read;
+	boolean found = false;
+	
+	read = fopen(EES_FILE_NAME, "r");
+	if (!read) 
+    return readingFileError;
+
+	while ((found == false) && (fread(data, sizeof(eesUserDataType), 1, read) != 0))
+		if (strcmp(data->nickname, nickname) == 0) found = true; 
+
+	fclose(read);
+	
+	if (found == false)
+		return usernameNotFoundError;
+			
+	return ok;
+}
+
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -208,31 +256,28 @@ essErrorType essCreateRandomString (char *, unsigned, char *);
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
-eesErrorType EesCreateNickname (char *, char *)
+eesErrorType EesCreateNickname (char * fullName, char * nicknameLastName, char * nicknamePenultimateName)
 {
-  int counter=0;
-	int nameCounter=0;
-	char copy[EES_FULL_NAME_MAXIMUM_LENGHT];
-	char singleName[EES_MAXIMUM_NAMES][EES_FULL_NAME_MAXIMUM_LENGHT+1];
+  int counter = 0;
+	int nameCounter = 0;
+	char copy[MAXIMUM_USER_FULL_NAME_LENGTH];
+	char singleName[EES_MAXIMUM_NAMES][MAXIMUM_USER_FULL_NAME_LENGTH + 1];
 	char *auxString;
 	eesUserDataType data;
 	int checkAvailableName;
 	
 	/*0 - Check pointer*/
-	if (!fullName) 
-		return EES_ERROR_EMPTY_POINTER;
-	if (!nickname)
-		return EES_ERROR_EMPTY_POINTER;
-	
-	
-	/*1 - Copy full name to auxiliar string*/
+	if (!fullName || !nicknameLastName) 
+		return nullPointerError;
+  
+	/* 1 - Copy full name to auxiliar string */
 	strcpy(copy,fullName);
 	
-	/*2 - Convert full name to lower case*/
+	/* 2 - Convert full name to lower case */
 	do
 	{
 		copy[counter] = tolower(copy[counter]);
@@ -240,16 +285,16 @@ eesErrorType EesCreateNickname (char *, char *)
 	}
 	while (counter < strlen(copy));
 	
-	/*3 - Count how many spaces on full name*/
+	/* 3 - Count how many spaces on full name */
 	for (counter = 0; counter < strlen(copy); counter++)
 		if (copy[counter] == ' ') nameCounter++;
 	
 	
-	/*4 - Put the single names on the array*/
+	/* 4 - Put the single names on the array */
 	for (counter = 0; counter < nameCounter; counter++)
 	{		
 		auxString = strstr(copy," ");
-		memset(singleName[counter],0x00,EES_FULL_NAME_MAXIMUM_LENGHT+1);
+		memset(singleName[counter], 0x00, MAXIMUM_USER_FULL_NAME_LENGTH + 1);
 		strncpy(singleName[counter],copy,strlen(copy)-strlen(auxString));
 		auxString++;
 		strcpy(copy,auxString);	
@@ -257,44 +302,44 @@ eesErrorType EesCreateNickname (char *, char *)
 	
 	strcpy(singleName[nameCounter],copy);
 	
-	/*5 - Generate a valid nickname*/
+	/* 5 - Generate a valid nicknameLastName */
 	
-	memset(nickname,0x00,MAXIMUM_USER_NICKNAME_LENGTH+1);
-	strcat(nickname,singleName[0]);
-	strcat(nickname,".");
-	strcat(nickname,singleName[nameCounter]);
+	memset(nicknameLastName, 0x00, MAXIMUM_USER_NICKNAME_LENGTH + 1);
+	strcat(nicknameLastName,singleName[0]);
+	strcat(nicknameLastName,".");
+	strcat(nicknameLastName,singleName[nameCounter]);
 	
 	do
 	{	
 		if (strlen(singleName[nameCounter]) > 2)
 		{
-			memset(nickname,0x00,MAXIMUM_USER_NICKNAME_LENGTH+1);
-			strcat(nickname,singleName[0]);
-			strcat(nickname,".");
-			strcat(nickname,singleName[nameCounter]);
-			checkAvailableName = eesSearchUser(nickname, &data);
+			memset(nicknameLastName,0x00,MAXIMUM_USER_NICKNAME_LENGTH+1);
+			strcat(nicknameLastName,singleName[0]);
+			strcat(nicknameLastName,".");
+			strcat(nicknameLastName,singleName[nameCounter]);
+			checkAvailableName = eesSearchUser(nicknameLastName, &data);
 		}
 		nameCounter--;
 		
 		if (nameCounter == -1)
 		{
-			memset(nickname,0x00,MAXIMUM_USER_NICKNAME_LENGTH+1);
-			strcat(nickname,singleName[0]);
+			memset(nicknameLastName, 0x00, MAXIMUM_USER_NICKNAME_LENGTH + 1);
+			strcat(nicknameLastName,singleName[0]);
 		}
 		
 		if (nameCounter == -2)
-			return EES_ERROR_CREATE_NICKNAME;
+			return errorCreatingNickname;
 
 	}
-	while (checkAvailableName != EES_ERROR_USERNAME_NOT_FOUND); /*This check if the name is already in use*/
+	while (checkAvailableName != usernameNotFoundError); /*This check if the name is already in use*/
 	
-	if (strlen(nickname) < EES_MINUMUM_NICKNAME_LENGHT)
-		return EES_ERROR_CREATE_NICKNAME;
+	if (strlen(nicknameLastName) < MINIMUM_USER_NICKNAME_LENGTH)
+		return errorCreatingNickname;
 	
-	return EES_OK;
+	return ok;
 }
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -311,13 +356,13 @@ eesErrorType EesCreateNickname (char *, char *)
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesGetCryptAlgorithm (char *, eesCryptAlgorithms *);
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -334,13 +379,13 @@ eesErrorType EesGetCryptAlgorithm (char *, eesCryptAlgorithms *);
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesEncodePasswordWithSpecificAlgorithm (char *, eesCryptAlgorithms, char *);
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -357,13 +402,13 @@ eesErrorType EesEncodePasswordWithSpecificAlgorithm (char *, eesCryptAlgorithms,
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesEncodePasswordWithSpecificSalt (char *, char *, char *);
 
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -380,13 +425,12 @@ eesErrorType EesEncodePasswordWithSpecificSalt (char *, char *, char *);
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesCheckPassword (char *, char *);
-
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 /*
 *	Checks the string field to see whether it's valid or not.
@@ -403,13 +447,12 @@ eesErrorType EesCheckPassword (char *, char *);
 *
 *
 *	Returned Value:
-*	  eesErrorOk if this function is sucessfully executed. If an error
+*	  ok if this function is sucessfully executed. If an error
 *	  occurs, one of these constants may be returned:
 *	  eesErrorInvalidField
 */
 eesErrorType EesAuthenticateUser (eesUserDataType *);
-
-/******************************************************************************************************************/
+/*================================================================================================================*/
 
 
 
