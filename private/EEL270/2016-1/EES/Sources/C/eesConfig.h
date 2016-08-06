@@ -15,7 +15,7 @@
 #define  "@(#)eesConfig.h $Revision$"
 
 #ifndef EES_WEB_SERVER_URL
-#define EES_WEB_SERVER_URL "http://www02.del.ufrj.br/~gabriel.souza/EES/"
+#define EES_WEB_SERVER_URL "http://www02.del.ufrj.br/~gabriel.souza/EES"
 #endif /* #ifndef EES_WEB_SERVER_URL */
 
 #ifndef EES_ADMINISTRATOR_USER_IDENTIFIER
@@ -23,15 +23,15 @@
 #endif /* #ifndef EES_ADMINISTRATOR_USER_IDENTIFIER */
 
 #ifndef EES_PRIVATE_ROOT_DIRECTORY
-#define EES_PRIVATE_ROOT_DIRECTORY "/users/gabriel.souza/private/EEL270/2016-1/EES/"
+#define EES_PRIVATE_ROOT_DIRECTORY "/users/gabriel.souza/private/EEL270/2016-1/EES"
 #endif /* #ifndef EES_PRIVATE_ROOT_DIRECTORY */
 
 #ifndef EES_DATA_DIRECTORY
-#define EES_DATA_DIRECTORY "/users/gabriel.souza/private/EEL270/2016-1/EES/Data/"
+#define EES_DATA_DIRECTORY "/users/gabriel.souza/private/EEL270/2016-1/EES/Data"
 #endif /* #ifndef EES_DATA_DIRECTORY */
 
 #ifndef EES_COOKIES_DIRECTORY
-#define EES_COOKIES_DIRECTORY "/users/gabriel.souza/private/EEL270/2016-1/EES/Data/Cookies/"
+#define EES_COOKIES_DIRECTORY "/users/gabriel.souza/private/EEL270/2016-1/EES/Data/Cookies"
 #endif /* #ifndef EES_COOKIES_DIRECTORY */
 
 #ifndef EES_USERS_DATA_FILENAME

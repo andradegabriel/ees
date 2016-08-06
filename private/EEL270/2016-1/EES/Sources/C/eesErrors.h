@@ -17,24 +17,12 @@
 #define __EES_ERRORS_H__	"@(#)eesErrors.h $Revision$"
 
 /* More codes will be added here, as we go with this project */
-typedef enum eesErrorType 
+typedef enum _eesErrorType 
 {
   ok,
-  invalidArgumentError,
-  invalidChosenLanguageError,
-  nullPointerError,
-  creatingNicknameError,
-  invalidStringError,
-  invalidContentError,
-  permissionDeniedError,
-  insufficientMemoryError,
-  readingFileError,
-  creatingTemporaryFileError,
-  creatingFileError,
-  writingDataToFileError,
-  generatingNicknameError,
-  usernameNotFoundError,
-  eesErrorsAmount			            /* ATENTION! eesErrorsAmount must always be last element in this enum */
+  invalidArgument,
+  invalidChosenLanguage,
+  eesErrorsAmount			/* ATENTION! eesErrorsAmount must always be last element in this enum */
 } eesErrorType;
 
 

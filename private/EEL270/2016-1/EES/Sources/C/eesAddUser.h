@@ -19,18 +19,18 @@
 * eesErrorType eesAddUser (eesUserDataType *)
 * 
 * Arguments: 
-* eesUserDataType *						      - User data
+* eesUserDataType *						     - User data
 * 
 * Returned Code:			
-* nullPointerError					    - Function has received a null pointer
-* permissionDeniedError					- Permission denied		
-* insufficientMemoryError			  - Could't allocate necessary memory
-* readingFileError					    - Error reading the file
-* creatingTemporaryFileError		- Error creating a temporary file	
-* creatingFileError					    - Error creating file
-* writingDataToFileError		    - Error writing data to the file
-* generatingNicknameError				- Could't generate a nickname
-* ok									          - No errors
+* EES_ERROR_EMPTY_POINTER					  - Function has received a null pointer
+* EES_PERMISSION_DENIED					    - Permission denied		
+* EES_ERROR_INSUFICIENT_MEMORY			- Could't allocate necessary memory
+* EES_ERROR_READING_FILE					  - Error reading the file
+* EES_ERROR_MKSTEMP						      - Error creating a temporary file	
+* EES_ERROR_WRITING_FILE					  - Error creating file
+* EES_ERROR_WRITING_DATA_TO_FILE		- Error writing data to the file
+* EES_ERROR_GENERATE_NICKNAME				- Could't generate a nickname
+* EES_OK									          - No errors
 * 
 * Description:
 * This function adds an user to the system, it must have e-mail, group and full name fields
