@@ -63,15 +63,15 @@ int main (int argc, char *argv[])
 	if (fDescriptor == -1)
 	{
 		printf("On user abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_MKSTEMP);
-		exit (EES_ERROR_MKSTEMP);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,creatingTemporaryFileError);
+		exit (creatingTemporaryFileError);
 	}
 	abeyance = fdopen(fDescriptor,EES_WRITE);
 	if (!abeyance)
 	{
 		printf("On user abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_WRITING_FILE);
-		exit (EES_ERROR_WRITING_FILE);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,creatingFileError);
+		exit (creatingFileError);
 	}
 	
 	/*Open the original file*/
@@ -79,10 +79,10 @@ int main (int argc, char *argv[])
 	if (!original)
 	{
 		printf("On user abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_READING_FILE);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,readingFileError);
 		fclose(abeyance);
 		remove(tempFile);
-		exit(EES_ERROR_READING_FILE);
+		exit(readingFileError);
 	}
 	
 	
@@ -92,7 +92,7 @@ int main (int argc, char *argv[])
 		
 		if (localTime > data.expiration)
 		{
-			if((errorCode = eesRemoveUserData(data.nickname)) != EES_OK)
+			if((errorCode = eesRemoveUserData(data.nickname)) != ok)
 			{
 				printf("On user abeyance file :\n");
 				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,errorCode);
@@ -102,11 +102,11 @@ int main (int argc, char *argv[])
 			if (fwrite(&data,1,sizeof(eesUserAbeyancesType),abeyance) != sizeof(eesUserAbeyancesType))
 			{
 				printf("On user abeyance file :\n");
-				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_WRITING_DATA_TO_FILE);
+				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,writingDataToFileError);
 				fclose(original);
 				fclose(abeyance);
 				remove(tempFile);
-				exit (EES_ERROR_WRITING_DATA_TO_FILE);
+				exit (writingDataToFileError);
 			}
 	}
 	
@@ -128,16 +128,16 @@ int main (int argc, char *argv[])
 	if (fDescriptor == -1)
 	{
 		printf("On passwords abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_MKSTEMP);
-		return EES_ERROR_MKSTEMP;
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,creatingTemporaryFileError);
+		return creatingTemporaryFileError;
 	}
 	
 	abeyance = fdopen(fDescriptor, EES_WRITE);
 	if (!abeyance)
 	{
 		printf("On passwords abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_WRITING_FILE);
-		exit (EES_ERROR_WRITING_FILE);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,creatingFileError);
+		exit (creatingFileError);
 	}
 	
 	/*Open the original file*/
@@ -145,10 +145,10 @@ int main (int argc, char *argv[])
 	if (!original)
 	{
 		printf("On passwords abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_READING_FILE);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,readingFileError);
 		fclose(abeyance);
 		remove(tempFile);
-		exit(EES_ERROR_READING_FILE);
+		exit(readingFileError);
 	}
 	
 	while (fread(&passData,1,sizeof(eesUserAbeyancePasswordType),original) != 0)
@@ -158,7 +158,7 @@ int main (int argc, char *argv[])
 		if (localTime > passData.expiration)
 		{
 			errorCode = eesClearUserFlag(passData.UID, passwordReset); 
-			if (errorCode != EES_OK)
+			if (errorCode != ok)
 			{
 				printf("On passwords abeyance file :\n");
 				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,errorCode);				
@@ -169,11 +169,11 @@ int main (int argc, char *argv[])
 			if (fwrite(&passData,1,sizeof(eesUserAbeyancePasswordType),abeyance) != sizeof(eesUserAbeyancePasswordType))
 			{
 				printf("On passwords abeyance file :\n");
-				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_WRITING_DATA_TO_FILE);
+				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,writingDataToFileError);
 				fclose(original);
 				fclose(abeyance);
 				remove(tempFile);
-				exit (EES_ERROR_WRITING_DATA_TO_FILE);
+				exit (writingDataToFileError);
 			}
 	}
 	
@@ -197,16 +197,16 @@ int main (int argc, char *argv[])
 	if (fDescriptor == -1)
 	{
 		printf("On e-mail abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_MKSTEMP);
-		return EES_ERROR_MKSTEMP;
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,creatingTemporaryFileError);
+		return creatingTemporaryFileError;
 	}
 	
 	abeyance = fdopen(fDescriptor, EES_WRITE);
 	if (!abeyance)
 	{
 		printf("On e-mail abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_WRITING_FILE);
-		exit (EES_ERROR_WRITING_FILE);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,creatingFileError);
+		exit (creatingFileError);
 	}
 	
 	/*Open the original file*/
@@ -214,10 +214,10 @@ int main (int argc, char *argv[])
 	if (!original)
 	{
 		printf("On e-mail abeyance file :\n");
-		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_READING_FILE);
+		eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,readingFileError);
 		fclose(abeyance);
 		remove(tempFile);
-		exit(EES_ERROR_READING_FILE);
+		exit(readingFileError);
 	}
 	
 	while (fread(&mailData,1,sizeof(eesUserAbeyanceEmailType),original) != 0)
@@ -228,14 +228,14 @@ int main (int argc, char *argv[])
 		if (localTime > mailData.expiration)
 		{
 			errorCode = eesClearUserFlag(mailData.UID, emailChange); 
-			if (errorCode != EES_OK)
+			if (errorCode != ok)
 			{
 				printf("On e-mail abeyance file :\n");
 				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,errorCode);				
 			}
 			
 			errorCode = eesRemoveFromEmailAbeyanceList(mailData.UID,-1);
-			if (errorCode != EES_OK)
+			if (errorCode != ok)
 			{
 				printf("On e-mail confirmation codes file :\n");
 				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,errorCode);				
@@ -246,11 +246,11 @@ int main (int argc, char *argv[])
 			if (fwrite(&mailData,1,sizeof(eesUserAbeyanceEmailType),abeyance) != sizeof(eesUserAbeyanceEmailType))
 			{
 				printf("On e-mail abeyance file :\n");
-				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,EES_ERROR_WRITING_DATA_TO_FILE);
+				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,writingDataToFileError);
 				fclose(original);
 				fclose(abeyance);
 				remove(tempFile);
-				exit (EES_ERROR_WRITING_DATA_TO_FILE);
+				exit (writingDataToFileError);
 			}
 	}
 	
@@ -290,7 +290,7 @@ int main (int argc, char *argv[])
 		if (access(cookiePath,F_OK) == 0)
 		{
 			errorCode = eesReadCookie(cookieName,&expiration,cookieContent,cookieIP);
-			if (errorCode != EES_OK)
+			if (errorCode != ok)
 			{
 				printf("On cookie cleaning : \n");
 				eesGetTextErrorMessage(EES_DEFAULT_LANGUAGE,errorCode);
@@ -304,7 +304,8 @@ int main (int argc, char *argv[])
 	}
 		
 	printf("Successfull removed expirated data\n");
-	return EES_OK;
+  
+	return ok;
 }   
 
 

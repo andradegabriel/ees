@@ -19,15 +19,15 @@
 * eesUserDataType *						     - User data
 * 
 * Returned Code:			
-* EES_ERROR_EMPTY_POINTER					  - Function has received a null pointer
-* EES_PERMISSION_DENIED					    - Permission denied		
-* EES_ERROR_INSUFICIENT_MEMORY			- Could't allocate necessary memory
-* EES_ERROR_READING_FILE					  - Error reading the file
-* EES_ERROR_MKSTEMP						      - Error creating a temporary file	
-* EES_ERROR_WRITING_FILE					  - Error creating file
-* EES_ERROR_WRITING_DATA_TO_FILE		- Error writing data to the file
-* EES_ERROR_GENERATE_NICKNAME				- Could't generate a nickname
-* EES_OK									          - No errors
+* nullPointerError					       - Function has received a null pointer
+* permissionDeniedError					   - Permission denied		
+* insufficientMemoryError			     - Could't allocate necessary memory
+* readingFileError					       - Error reading the file
+* creatingTemporaryFileError			 - Error creating a temporary file	
+* creatingFileError					       - Error creating file
+* writingDataToFileError		       - Error writing data to the file
+* generatingNicknameError				   - Could't generate a nickname
+* ok									             - No errors
 * 
 * Description:
 * This function adds an user to the system, it must have e-mail, group and full name fields
@@ -45,10 +45,11 @@ eesErrorType eesAddUser (eesUserDataType *data)
 	eesUserIdentifier UID;
 	char tempPassword[EES_TEMP_PASSWORD_LENGHT+1];
 	
-	if(!data) return EES_ERROR_EMPTY_POINTER;
+	if(!data) 
+    return nullPointerError;
 
 	
-	if (strcmp(data->nickname,EES_ROOT_NAME) == 0)
+	if (strcmp(data->nickname, EES_ROOT_NAME) == 0)
 	{
 		if (getuid() == EES_ADMINISTRATOR_USER_IDENTIFIER)
 		{
@@ -73,26 +74,26 @@ eesErrorType eesAddUser (eesUserDataType *data)
 			data->UID = 0;
 
 
-			if ((errorCode = eesWriteFile(data)) != EES_OK)
+			if ((errorCode = eesWriteFile(data)) != ok)
 				return errorCode;
 			
 			return (eesGenerateTextFile());
 						
 		}
 		else
-			return EES_PERMISSION_DENIED;
+			return permissionDeniedError;
 	}
 	/*if nickname = root*/
 	
 	/*Add nickname field*/
-	if ((errorCode = eesGenerateNickname(data->fullName,nickname)) != EES_OK)
+	if ((errorCode = eesGenerateNickname(data->fullName,nickname)) != ok)
 		return errorCode;
 		
 	strcpy(data->nickname,nickname);
 	data->flag = abeyance;
 	
 	/*Add uid field*/
-	if ((errorCode = eesGetValidUid(&UID)) != EES_OK)
+	if ((errorCode = eesGetValidUid(&UID)) != ok)
 		return errorCode;
 	data->UID = UID;
 	
@@ -107,7 +108,7 @@ eesErrorType eesAddUser (eesUserDataType *data)
 	
 	
 	/*Writing data to new file*/
-	if ((errorCode = eesWriteFile(data)) != EES_OK)
+	if ((errorCode = eesWriteFile(data)) != ok)
 		return errorCode;
 	
 	/*Adding users to abeyances file*/
@@ -122,7 +123,7 @@ eesErrorType eesAddUser (eesUserDataType *data)
 	strncpy(data->codedPassword,tempPassword,EES_TEMP_PASSWORD_LENGHT+1);
 
 
-	return 	EES_OK;
+	return ok;
 
 }
 

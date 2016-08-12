@@ -25,8 +25,20 @@ char *eesCliErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
   /* English Error Messages */
   {
     "Successful operation!",
-    "Invalid argument.",
-    "Invalid chosen language.",
+    "Invalid argument error.",
+    "Invalid chosen language error.",
+    "Null pointer error.",
+    "Error while creating nickname.",
+    "Invalid string error.",
+    "Invalid content error.",
+    "Permision denied.",
+    "Insufficient memory error.",
+    "Error while reading file.",
+    "Error while creating temporary file.",
+    "Error while creating file.",
+    "Error while writing data to file.",
+    "Generating nickname error.",
+    "Username not found error."
     "Invalid error number."
   },
 
@@ -35,17 +47,41 @@ char *eesCliErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
     "Operacao realizada com sucesso.",
     "Argumento invalido.",
     "Lingua escolhida eh invalida.",
+    "Erro: ponteiro nulo.",
+    "Erro criando nickname.",
+    "Erro: string invalida.",
+    "Erro: conteudo invalido.",
+    "Permissao negada.",
+    "Erro: memoria insuficiente.",
+    "Erro lendo o arquivo.",
+    "Erro criando arquivo temporario.",
+    "Erro criando arquivo.",
+    "Erro escrevendo os dados no arquivo.",
+    "Erro na geracao do nickname.",
+    "Erro: nome de usuario nao encontrado."
     "Numero de erro invalido."
   }
 };
 
 char *eesNcursesErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
 {
-  /* English Error Messages */
+   /* English Error Messages */
   {
     "Successful operation!",
-    "Invalid argument.",
-    "Invalid chosen language.",
+    "Invalid argument error.",
+    "Invalid chosen language error.",
+    "Null pointer error.",
+    "Error while creating nickname.",
+    "Invalid string error.",
+    "Invalid content error.",
+    "Permision denied.",
+    "Insufficient memory error.",
+    "Error while reading file.",
+    "Error while creating temporary file.",
+    "Error while creating file.",
+    "Error while writing data to file.",
+    "Generating nickname error.",
+    "Username not found error."
     "Invalid error number."
   },
 
@@ -54,6 +90,18 @@ char *eesNcursesErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
     "Operacao realizada com sucesso.",
     "Argumento invalido.",
     "Lingua escolhida eh invalida.",
+    "Erro: ponteiro nulo.",
+    "Erro criando nickname.",
+    "Erro: string invalida.",
+    "Erro: conteudo invalido.",
+    "Permissao negada.",
+    "Erro: memoria insuficiente.",
+    "Erro lendo o arquivo.",
+    "Erro criando arquivo temporario.",
+    "Erro criando arquivo.",
+    "Erro escrevendo os dados no arquivo.",
+    "Erro na geracao do nickname.",
+    "Erro: nome de usuario nao encontrado."
     "Numero de erro invalido."
   }
 };
@@ -63,8 +111,20 @@ char *eesWebErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
   /* English Error Messages */
   {
     "Successful operation!",
-    "Invalid argument.",
-    "Invalid chosen language.",
+    "Invalid argument error.",
+    "Invalid chosen language error.",
+    "Null pointer error.",
+    "Error while creating nickname.",
+    "Invalid string error.",
+    "Invalid content error.",
+    "Permision denied.",
+    "Insufficient memory error.",
+    "Error while reading file.",
+    "Error while creating temporary file.",
+    "Error while creating file.",
+    "Error while writing data to file.",
+    "Generating nickname error.",
+    "Username not found error."
     "Invalid error number."
   },
 
@@ -73,6 +133,18 @@ char *eesWebErrorMessages[IDIOMS_QUANTITY][ERROR_CODE_QUANTITY]=
     "Operacao realizada com sucesso.",
     "Argumento invalido.",
     "Lingua escolhida eh invalida.",
+    "Erro: ponteiro nulo.",
+    "Erro criando nickname.",
+    "Erro: string invalida.",
+    "Erro: conteudo invalido.",
+    "Permissao negada.",
+    "Erro: memoria insuficiente.",
+    "Erro lendo o arquivo.",
+    "Erro criando arquivo temporario.",
+    "Erro criando arquivo.",
+    "Erro escrevendo os dados no arquivo.",
+    "Erro na geracao do nickname.",
+    "Erro: nome de usuario nao encontrado."
     "Numero de erro invalido."
   }
 };

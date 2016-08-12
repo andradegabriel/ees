@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef 
-#define  "@(#)eesConfig.h $Revision$"
+#ifndef __EES_CONFIG_H__
+#define __EES_CONFIG_H__    "@(#)eesConfig.h $Revision$"
 
 #ifndef EES_WEB_SERVER_URL
 #define EES_WEB_SERVER_URL "http://www02.del.ufrj.br/~gabriel.souza/EES/"
@@ -49,6 +49,16 @@
 #ifndef EES_LOCKED_USERS_DATA_FILENAME
 #define EES_LOCKED_USERS_DATA_FILENAME "locked_users"
 #endif /* #ifndef EES_LOCKED_USERS_DATA_FILENAME */
+
+/* TODO - Check this define later */
+#ifndef EES_FILE_NAME
+#define EES_FILE_NAME "/users/gabriel.souza/private/EEL270/2016-1/EES/Data/eesData.bin"
+#endif /* #ifndef EES_FILE_NAME */
+
+/* TODO - Check this define later */
+#ifndef EES_MAXIMUM_NAME_QUANTITY
+#define EES_MAXIMUM_NAME_QUANTITY 8
+#endif /* #ifndef EES_MAXIMUM_NAME_QUANTITY */
 
 
 #endif

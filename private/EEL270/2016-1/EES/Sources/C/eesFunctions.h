@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "eesConfig.h"
 #include "eesConst.h"
 #include "eesTypes.h"
 #include "eesErrors.h"
@@ -148,11 +149,11 @@ eesErrorType EesCreateRandomString (char *, unsigned, char *);
 
 /*
 * eesErrorType 
-* EesSearchUser (char *nickname, thcUserDataType *data);
+* EesSearchUser (char *nickname, eesUserDataType *data);
 * 
 * Arguments: 
 * char *nickname					  - user nickname
-* thcUserDataType *data			- struct with all user data
+* eesUserDataType *data			- struct with all user data
 * 
 * Returned Code:
 * readingFileError			  - Error reading the file

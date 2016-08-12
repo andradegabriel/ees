@@ -12,9 +12,8 @@
 CC = gcc
 LD = gcc
 
-CFLAGS = -Wall -ansi
-LFLAGS = -Wall -ansi
-
+CFLAGS = -Wall
+LFLAGS = -Wall
 
 # Default Directories ##########################################################
 DEFAULT_CGI_DIRECTORY = /users/gabriel.souza/public/EEL270/2016-1/EES/CGIs/
@@ -49,7 +48,7 @@ ALL = $(LIBS)\
 EXECS = $(TEST_GET_LANGUAGE_TYPE)\
 	$(TEST_GET_ERROR_MESSAGE)\
 	$(TEST_GET_USER_INTERFACE_MESSAGE)\
-	$(TEST_GETABSOLUTFILENAME)
+	$(TEST_GET_ABSOLUT_FILE_NAME)
 	
 
 # Compilation Rule #############################################################

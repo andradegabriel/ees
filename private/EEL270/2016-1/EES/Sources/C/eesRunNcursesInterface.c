@@ -53,6 +53,8 @@
 #include "eesRunNcursesInterface.h"                          
 #include "eesChangeUserPassword.h"
 
+/*================================================================================================================*/
+
 char *choices[][2] = 
 {
 	{"Invite User","Convidar usuario"},
@@ -64,6 +66,8 @@ char *choices[][2] =
 	{"Change Group","Trocar Grupo"},
 	{"Add to Group","Adicionar ao grupo"},
 };
+
+/*================================================================================================================*/
 
 char *description[][2] = 
 {
@@ -77,6 +81,7 @@ char *description[][2] =
 	{"        : Add user to group","        : Adiciona usuario ao grupo"}
 };
        
+/*================================================================================================================*/
  
 char *text[][2]=
 {
@@ -110,14 +115,15 @@ char *text[][2]=
 /*27*/	{"User wasn't remove, press any key to return","Usuário nao foi apagado, pressione qualquer tecla para voltar"},	
 };              
 
-                       
+/*================================================================================================================*/    
+
 int adminChoices = 0;  
 
 eesErrorType eesRunNcursesInterface (char *nickname, eesLanguageType language)
 {
 	eesUserDataType data;
 	unsigned passwordErrorCounter = EES_PASSWORD_ATTEMPTS;	
-	char password[EES_PASSWORD_MAXIMUM_LENGHT+1];
+	char password[MAXIMUM_PASSWORD_LENGTH+1];
 	ITEM **myItems;
 	int option;				
 	MENU *myMenu;
@@ -137,12 +143,12 @@ eesErrorType eesRunNcursesInterface (char *nickname, eesLanguageType language)
 		getstr(nickname);	
 	}
 	
-	if (eesSearchUser(nickname, &data) == EES_ERROR_USERNAME_NOT_FOUND)
+	if (eesSearchUser(nickname, &data) == usernameNotFoundError)
 	{
 		printw("%s",text[3][language]);
 		getch();
 		endwin();
-		return EES_ERROR_USERNAME_NOT_FOUND;
+		return usernameNotFoundError;
 	}
 	
 	do
@@ -154,14 +160,14 @@ eesErrorType eesRunNcursesInterface (char *nickname, eesLanguageType language)
 			printw("%s",text[5][language]);
 			getch();
 			endwin();
-			return EES_PERMISSION_DENIED;
+			return permissionDeniedError;
 		}
 		
 		printw("%s",text[4][language]);	
 		getstr(password);
 
 	}
-	while ((passwordErrorCounter != 0) && (eesUserLogin(nickname,password, &data) != EES_OK));
+	while ((passwordErrorCounter != 0) && (eesUserLogin(nickname,password, &data) != ok));
 	
 	/*Check for admin member*/
 	if ((data.group != administrador) && (data.group != userAdmin) && (data.group != ownerAdmin) &&(data.group != root))
@@ -279,20 +285,20 @@ eesErrorType eesRunNcursesInterface (char *nickname, eesLanguageType language)
 	free_menu(myMenu);
 	endwin();
 	
-	return EES_OK;
+	return ok;
 }  
 
-
+/*================================================================================================================*/
 
 
 eesErrorType eesCursesChangeEmail(eesUserDataType *data, eesLanguageType language)
 {
-	char email[EES_EMAIL_MAXIMUM_LENGHT+1];
-	char confEmail[EES_EMAIL_MAXIMUM_LENGHT+1];
-	char nickname[EES_NICKNAME_MAXIMUM_LENGHT +1];
+	char email[MAXIMUM_EMAIL_LENGTH+1];
+	char confEmail[MAXIMUM_EMAIL_LENGTH+1];
+	char nickname[MAXIMUM_USER_NICKNAME_LENGTH +1];
 	eesErrorType errorCode;
 	
-	memset(nickname,0x00,EES_NICKNAME_MAXIMUM_LENGHT);
+	memset(nickname,0x00,MAXIMUM_USER_NICKNAME_LENGTH);
 	
 	echo();
 	
@@ -315,23 +321,25 @@ eesErrorType eesCursesChangeEmail(eesUserDataType *data, eesLanguageType languag
 	if (strcmp (email,confEmail) != 0)
 	{
 		printw("a");
-		return EES_INVALID_ARGUMENT;
+		return invalidArgumentError;
 	}
 	
 	errorCode = eesChangeEmailAdress(nickname,email,language);
 	
-	if (errorCode != EES_OK) return errorCode;
+	if (errorCode != ok) return errorCode;
 	
 	getch();
 	noecho();
 	
-	return EES_OK;
+	return ok;
 }
+
+/*================================================================================================================*/
 
 eesErrorType eesCursesChangeGroup(char operation, eesLanguageType language)
 {
 	eesUserDataType data;
-	char nickname[EES_NICKNAME_MAXIMUM_LENGHT + 1];
+	char nickname[MAXIMUM_USER_NICKNAME_LENGTH + 1];
 	eesErrorType errorCode;
 	eesGroupType group;
 	char selectedGroup;
@@ -342,7 +350,7 @@ eesErrorType eesCursesChangeGroup(char operation, eesLanguageType language)
 	getstr(nickname);
 
 	errorCode = eesSearchUser(nickname,&data);
-	if (errorCode != EES_OK)
+	if (errorCode != ok)
 	{
 		eesGetCursesErrorMessage(language,errorCode);
 		return errorCode;
@@ -367,7 +375,7 @@ eesErrorType eesCursesChangeGroup(char operation, eesLanguageType language)
 		default :	
 			printw("%s",text[23][language]);
 			getch();
-			return EES_OK;
+			return ok;
 	}
 	
 	if (operation == 'a')
@@ -375,19 +383,19 @@ eesErrorType eesCursesChangeGroup(char operation, eesLanguageType language)
 	if (operation == 'c')
 		errorCode = eesChangeUserGroup(nickname,group);
 	
-	if (errorCode != EES_OK)
+	if (errorCode != ok)
 		eesGetCursesErrorMessage(language,errorCode);	
 		
 	return errorCode;	
 }
 
-
+/*================================================================================================================*/
 
 eesErrorType eesCursesInvite(eesUserDataType userData, eesLanguageType language)
 {
 	char username[EES_FULL_NAME_MAXIMUM_LENGHT+1];
-	char email[EES_EMAIL_MAXIMUM_LENGHT+1];
-	char confEmail[EES_EMAIL_MAXIMUM_LENGHT+1];
+	char email[MAXIMUM_EMAIL_LENGTH+1];
+	char confEmail[MAXIMUM_EMAIL_LENGTH+1];
 	eesUserDataType data;
 	eesErrorType errorCode;
 	
@@ -403,28 +411,28 @@ eesErrorType eesCursesInvite(eesUserDataType userData, eesLanguageType language)
 	getstr(confEmail);
 	
 	/*Check for email*/
-	if (strlen(email) < EES_EMAIL_MINUMUM_LENGHT)
+	if (strlen(email) < MINIMUM_EMAIL_LENGTH)
 	{
-		eesGetCursesErrorMessage(language,EES_INVALID_ARGUMENT);
+		eesGetCursesErrorMessage(language,invalidArgumentError);
 		move(0,0);
 		clrtobot();
-		return (EES_INVALID_ARGUMENT);	
+		return (invalidArgumentError);	
 	}
 	if (strcmp(email,confEmail) != 0)
 	{
-		eesGetCursesErrorMessage(language,EES_INVALID_ARGUMENT);
+		eesGetCursesErrorMessage(language,invalidArgumentError);
 		move(0,0);
 		clrtobot();
-		return (EES_INVALID_ARGUMENT);		
+		return (invalidArgumentError);		
 	}
 	
 	/*Check for username*/
 	if (strlen(username) == 0)
 	{
-		eesGetCursesErrorMessage(language,EES_INVALID_ARGUMENT);
+		eesGetCursesErrorMessage(language,invalidArgumentError);
 		move(0,0);
 		clrtobot();
-		return (EES_INVALID_ARGUMENT);		
+		return (invalidArgumentError);		
 	}
 	
 	strcpy(data.fullName,username);
@@ -432,7 +440,7 @@ eesErrorType eesCursesInvite(eesUserDataType userData, eesLanguageType language)
 	data.group = user;
 	
 	errorCode = eesAddUser(&data);
-	if (errorCode != EES_OK) 
+	if (errorCode != ok) 
 	{
 		eesGetCursesErrorMessage(language,errorCode);	
 		return errorCode;
@@ -441,7 +449,7 @@ eesErrorType eesCursesInvite(eesUserDataType userData, eesLanguageType language)
 	eesGenerateTextFile();
 	
 	errorCode = eesInvitationMail (username,userData.fullName,data.codedPassword,email,data.nickname,language);
-	if (errorCode != EES_OK)
+	if (errorCode != ok)
 	{
 		eesGetCursesErrorMessage(language,errorCode);	
 		return errorCode;
@@ -453,19 +461,20 @@ eesErrorType eesCursesInvite(eesUserDataType userData, eesLanguageType language)
 	move(0,0);
 	clrtobot();
 	
-	return EES_OK;
+	return ok;
 }
 
+/*================================================================================================================*/
 
 eesErrorType eesCursesChangePassword(eesUserDataType *data, eesLanguageType language)
 {
-	char password[EES_PASSWORD_MAXIMUM_LENGHT+1];
-	char confirm [EES_PASSWORD_MAXIMUM_LENGHT+1];	
-	char nickname[EES_NICKNAME_MAXIMUM_LENGHT+1];
+	char password[MAXIMUM_PASSWORD_LENGTH+1];
+	char confirm [MAXIMUM_PASSWORD_LENGTH+1];	
+	char nickname[MAXIMUM_USER_NICKNAME_LENGTH+1];
 	eesErrorType errorCode;
 	eesUserDataType userData;
 	
-	memset(nickname,0x00,EES_NICKNAME_MAXIMUM_LENGHT);
+	memset(nickname,0x00,MAXIMUM_USER_NICKNAME_LENGTH);
 	
 	if (adminChoices == 0)
 	{
@@ -477,7 +486,7 @@ eesErrorType eesCursesChangePassword(eesUserDataType *data, eesLanguageType lang
 		strcpy(nickname,data->nickname);
 	
 	errorCode = eesSearchUser(nickname,&userData);
-	if (errorCode != EES_OK) return errorCode;
+	if (errorCode != ok) return errorCode;
 	
 	noecho();
 	printw("%s",text[13][language]);
@@ -488,12 +497,12 @@ eesErrorType eesCursesChangePassword(eesUserDataType *data, eesLanguageType lang
 	{
 		printw("%s",text[15][language]);
 		getch();
-		return EES_OK;
+		return ok;
 	}
 	
 	strcpy(userData.codedPassword,password);
 	errorCode = eesChangeUserPassword(data);
-	if (errorCode != EES_OK)
+	if (errorCode != ok)
 	{
 		eesGetCursesErrorMessage(language,errorCode);	
 		return errorCode;
@@ -502,20 +511,21 @@ eesErrorType eesCursesChangePassword(eesUserDataType *data, eesLanguageType lang
 	printw("%s",text[16][language]);
 	getch();
 	
-	return EES_OK;
+	return ok;
 }
 
+/*================================================================================================================*/
 
 eesErrorType eesCursesChangeUsername(eesUserDataType data,eesLanguageType language)
 {
 	char username[EES_FULL_NAME_MAXIMUM_LENGHT+1];
-	char nickname[EES_NICKNAME_MAXIMUM_LENGHT + 1];
+	char nickname[MAXIMUM_USER_NICKNAME_LENGTH + 1];
 	eesUserDataType userData;
 	eesErrorType errorCode;
 	
 	echo();
 	
-	memset(nickname,0x00,EES_NICKNAME_MAXIMUM_LENGHT);
+	memset(nickname,0x00,MAXIMUM_USER_NICKNAME_LENGTH);
 	
 	if (adminChoices == 0)
 	{
@@ -527,7 +537,7 @@ eesErrorType eesCursesChangeUsername(eesUserDataType data,eesLanguageType langua
 		strcpy(nickname,data.nickname);
 
 	errorCode = eesSearchUser(nickname,&userData);
-	if (errorCode != EES_OK) 
+	if (errorCode != ok) 
 	{
 		eesGetCursesErrorMessage(language,errorCode);	
 		return errorCode;
@@ -539,16 +549,16 @@ eesErrorType eesCursesChangeUsername(eesUserDataType data,eesLanguageType langua
 	/*Check for username*/
 	if (strlen(username) < EES_MINUMUM_FULL_NAME_LENGHT)
 	{
-		eesGetCursesErrorMessage(language,EES_INVALID_ARGUMENT);	
+		eesGetCursesErrorMessage(language,invalidArgumentError);	
 		move(0,0);
 		clrtobot();
-		return (EES_INVALID_ARGUMENT);		
+		return (invalidArgumentError);		
 	}
 	
 	strcpy(userData.fullName,username);
 	
 	errorCode = eesEditUserName(&userData);
-	if (errorCode != EES_OK); 
+	if (errorCode != ok); 
 	{
 		eesGetCursesErrorMessage(language,errorCode);	
 		return errorCode;
@@ -558,13 +568,15 @@ eesErrorType eesCursesChangeUsername(eesUserDataType data,eesLanguageType langua
 	move(0,0);
 	clrtobot();
 	
-	return EES_OK;
+	return ok;
 }         
+
+/*================================================================================================================*/
 
 eesErrorType eesCursesRemoveUser (eesUserDataType data, eesLanguageType language)
 {
 	eesErrorType errorCode;
-	char nickname[EES_NICKNAME_MAXIMUM_LENGHT + 1];
+	char nickname[MAXIMUM_USER_NICKNAME_LENGTH + 1];
 	char op;
 	
 	echo();
@@ -583,7 +595,7 @@ eesErrorType eesCursesRemoveUser (eesUserDataType data, eesLanguageType language
 	if ((op == 'Y') || (op == 'y') || (op == 'S') || (op == 's'))
 	{	
 		errorCode = eesRemoveUser(nickname);	
-		if (errorCode != EES_OK)
+		if (errorCode != ok)
 		{
 			eesGetCursesErrorMessage(language,errorCode);	
 			return errorCode;
@@ -597,7 +609,7 @@ eesErrorType eesCursesRemoveUser (eesUserDataType data, eesLanguageType language
 	
 	getch();
 	noecho();
-	return EES_OK;
+	return ok;
 }   
 
 /* $RCSfile$ */

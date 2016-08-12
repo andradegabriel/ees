@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "eesConfig.h"
 #include "eesConst.h"
 #include "eesTypes.h"
 #include "eesFunctions.h"
@@ -70,14 +71,20 @@ eesLanguageType EesGetLanguageIndex (char *chosenLanguage)
 * Description:
 * This function concatenates both string and return the result of the concatenation. */ 
 
-char * EesGetAbsolutFileName (char * fisrtString, char * secondString)
+char * EesGetAbsolutFileName (char * firstString, char * secondString)
 {
   char *resultString;
   
-  if((fisrtString == NULL) || (secondString == NULL))
+  if((firstString == NULL) || (secondString == NULL))
     return NULL;
   
-  snprintf(resultString, (sizeof(fisrtString) + sizeof(secondString)), "%s", "%s", fisrtString, secondString);
+  resultString = malloc(MAXIMUM_STRING_CONCATENATED_LENGTH);
+  
+  memset(resultString, 0x00, MAXIMUM_STRING_CONCATENATED_LENGTH);
+  
+  snprintf(resultString, MAXIMUM_STRING_CONCATENATED_LENGTH, "%s%s", firstString, secondString);
+  
+  free(resultString);
   
   return resultString;
 }
@@ -204,11 +211,11 @@ eesErrorType EesCreateRandomString (char *, unsigned, char *);
 
 /*
 * eesErrorType 
-* EesSearchUser (char *nickname, thcUserDataType *data);
+* EesSearchUser (char *nickname, eesUserDataType *data);
 * 
 * Arguments: 
 * char *nickname					  - user nickname
-* thcUserDataType *data			- struct with all user data
+* eesUserDataType *data			- struct with all user data
 * 
 * Returned Code:
 * readingFileError			  - Error reading the file
@@ -229,7 +236,7 @@ eesErrorType EesSearchUser (char *nickname, eesUserDataType *data)
     return readingFileError;
 
 	while ((found == false) && (fread(data, sizeof(eesUserDataType), 1, read) != 0))
-		if (strcmp(data->nickname, nickname) == 0) found = true; 
+		if (strcmp(data->eesNickname, nickname) == 0) found = true; 
 
 	fclose(read);
 	
@@ -265,7 +272,7 @@ eesErrorType EesCreateNickname (char * fullName, char * nicknameLastName, char *
   int counter = 0;
 	int nameCounter = 0;
 	char copy[MAXIMUM_USER_FULL_NAME_LENGTH];
-	char singleName[EES_MAXIMUM_NAMES][MAXIMUM_USER_FULL_NAME_LENGTH + 1];
+	char singleName[EES_MAXIMUM_NAME_QUANTITY][MAXIMUM_USER_FULL_NAME_LENGTH + 1];
 	char *auxString;
 	eesUserDataType data;
 	int checkAvailableName;
@@ -317,7 +324,7 @@ eesErrorType EesCreateNickname (char * fullName, char * nicknameLastName, char *
 			strcat(nicknameLastName,singleName[0]);
 			strcat(nicknameLastName,".");
 			strcat(nicknameLastName,singleName[nameCounter]);
-			checkAvailableName = eesSearchUser(nicknameLastName, &data);
+			checkAvailableName = EesSearchUser(nicknameLastName, &data);
 		}
 		nameCounter--;
 		
@@ -328,13 +335,13 @@ eesErrorType EesCreateNickname (char * fullName, char * nicknameLastName, char *
 		}
 		
 		if (nameCounter == -2)
-			return errorCreatingNickname;
+			return creatingNicknameError;
 
 	}
 	while (checkAvailableName != usernameNotFoundError); /*This check if the name is already in use*/
 	
 	if (strlen(nicknameLastName) < MINIMUM_USER_NICKNAME_LENGTH)
-		return errorCreatingNickname;
+		return creatingNicknameError;
 	
 	return ok;
 }
